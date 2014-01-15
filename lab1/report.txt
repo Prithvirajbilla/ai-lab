@@ -1,0 +1,118 @@
+CS 386 - Lab 01
+
+Roll Nos: 110050055
+     	  110050060
+	  110050062
+	  110050065
+
+We have run all the experiments using an initial w value with all zeros. Once a value of x, say x_i is checked, x_(i+1) is checked next, regardless of whether x_i fails in the perceptron test.
+
+We keep a count of the number of inputs the current perceptron passes and when it is equal to the total number of inputs (indicating that the prediction is correct for all x_i), we return th   e final weight vector. Once the current perceptron fails, we reset the number of correct inputs for the new one to zero.
+
+(a) NAND:
+    Final w value = [-4,-3,-2]
+    Converged in 34 steps
+    Number of updates made = 18
+
+    NOR:
+    Final w value = [-1,-2,-2]
+    Converged in 21 steps
+    Number of updates made = 9
+
+(b) XOR:
+    Does not converge. It repeats in a cycle of size 4 given below:
+    0 0 0 
+    1 0 0 
+    0 0 1 
+    -1 1 1
+
+(c) 5 input palindrome:
+    Does not converge. It repeats in a cycle of size 16 given below:
+    2 -1 -1 0 1 1 
+    1 0 -1 1 1 2 
+    2 0 -2 0 1 1 
+    3 0 -2 0 0 0 
+    2 1 -1 0 1 1 
+    3 1 -1 -1 0 0 
+    2 2 0 0 1 1 
+    1 2 0 0 1 1 
+    2 1 0 0 1 1 
+    1 1 0 1 1 1 
+    2 0 0 0 1 1 
+    1 0 1 0 2 1 
+    2 -1 0 0 1 1 
+    1 -1 1 1 2 1 
+    2 -2 0 0 1 1 
+    1 -1 0 0 1 2
+
+(d) 5 input majority:
+    Final w value = [7, 3, 3, 3, 3, 2]
+    Converged in 196 steps
+    Number of updates made = 41
+
+(e) 6 input parity:
+    Does not converge. It repeats in a cycle of size 64 given below:
+    -1 1 0 1 1 1 1 
+    0 0 0 0 0 0 0 
+    -1 1 1 0 0 0 0 
+    0 0 0 0 0 0 -1 
+    1 -1 -1 0 0 -1 -1 
+    0 0 0 0 0 0 0 
+    1 -1 -1 0 -1 0 0 
+    0 0 0 0 0 0 1 
+    -1 1 1 0 1 1 1 
+    0 0 0 0 0 0 0 
+    1 -1 -1 -1 0 0 0 
+    0 0 0 0 0 0 1 
+    -1 1 1 1 0 1 1 
+    0 0 0 0 0 0 0 
+    -1 1 1 1 1 0 0 
+    0 0 0 0 0 0 -1 
+    1 -1 -1 -1 -1 -1 -1 
+    0 0 0 0 0 0 0 
+    -1 0 0 0 0 0 0 
+    0 0 0 0 0 0 -1 
+    1 0 0 0 0 -1 -1 
+    0 0 0 0 0 0 0 
+    1 0 0 0 -1 0 0 
+    0 0 0 0 0 0 1 
+    -1 0 0 0 1 1 1 
+    0 0 0 0 0 0 0 
+    1 0 0 -1 0 0 0 
+    0 0 0 0 0 0 1 
+    -1 0 0 1 0 1 1 
+    0 0 0 0 0 0 0 
+    -1 0 0 1 1 0 0 
+    0 0 0 0 0 0 -1 
+    1 0 0 -1 -1 -1 -1 
+    0 0 0 0 0 0 0 
+    1 0 -1 0 0 0 0 
+    0 0 0 0 0 0 1 
+    -1 0 1 0 0 1 1 
+    0 0 0 0 0 0 0 
+    -1 0 1 0 1 0 0 
+    0 0 0 0 0 0 -1 
+    1 0 -1 0 -1 -1 -1 
+    0 0 0 0 0 0 0 
+    -1 0 1 1 0 0 0 
+    0 0 0 0 0 0 -1 
+    1 0 -1 -1 0 -1 -1 
+    0 0 0 0 0 0 0 
+    1 0 -1 -1 -1 0 0 
+    0 0 0 0 0 0 1 
+    -1 0 1 1 1 1 1 
+    0 0 0 0 0 0 0 
+    1 -1 0 0 0 0 0 
+    0 0 0 0 0 0 1 
+    -1 1 0 0 0 1 1 
+    0 0 0 0 0 0 0 
+    -1 1 0 0 1 0 0 
+    0 0 0 0 0 0 -1 
+    1 -1 0 0 -1 -1 -1 
+    0 0 0 0 0 0 0 
+    -1 1 0 1 0 0 0 
+    0 0 0 0 0 0 -1 
+    1 -1 0 -1 0 -1 -1 
+    0 0 0 0 0 0 0 
+    1 -1 0 -1 -1 0 0 
+    0 0 0 0 0 0 1 
