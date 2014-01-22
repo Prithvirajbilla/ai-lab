@@ -67,6 +67,6 @@ int main(){
   }
   print(w);
   cout<<"Converged in "<< steps<<" steps\n";
-  cout<<"NUmber of updates made = "<< updates<<"\n"; 
+  cout<<"Number of updates made = "<< updates<<"\n"; 
   return 0;
 }
