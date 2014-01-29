@@ -13,10 +13,20 @@ class neuralNetwork
 {
 private:
   int nInputs, nOutputs, nHidden;
+ /**
+	nInputs = numbers of inputs | number of neurons in the first layer;
+	nOutputs = number of outputs | number of neurons in the last layer;
+	nHidden = number of hidden neurons
+ **/
 
   double *inputNeurons, *outputNeurons, *hiddenNeurons;
-
+ /**
+      inputNeurons - Array containing the inputs to the Algorithm.
+      outputNeurons - Array containing the expected output to the Algorithm.
+      hiddenNeurons - Array containing the expected output in the hidden layer.
+ **/
   int *inputs;
+
   int *outputs;
 
   double **weightHidden, **weightOutput;
@@ -43,8 +53,8 @@ public:
     deltaHidden = new double*[nInputs+1];
     for (int i = 0; i < nInputs+1; ++i)
     {
-      weightHidden[i] = new double[nHidden]; 
-      deltaHidden[i] = new double[nHidden];     
+      weightHidden[i] = new double[nHidden];
+      deltaHidden[i] = new double[nHidden];
     }
 
     weightOutput = new double*[nHidden+1];
