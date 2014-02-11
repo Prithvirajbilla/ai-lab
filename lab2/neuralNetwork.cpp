@@ -91,7 +91,7 @@ public:
     {
       for (int j = 0; j < nHidden; ++j)
       {
-        weightHidden[i][j] = (rand()%10)/10.0;
+        weightHidden[i][j] = (rand()%50)/300.0;
       }
     }
 
@@ -99,7 +99,7 @@ public:
     {
       for (int j = 0; j < nOutputs; ++j)
       {
-        weightOutput[i][j] = (rand()%10)/10.0;
+        weightOutput[i][j] = (rand()%50)/300.0;
       }
     }
   }
@@ -157,12 +157,14 @@ public:
     {
       for(int j=0; j<nInputs+1;++j)
       {
-        deltaHidden[j][i] = momentumFactor*deltaHidden[j][i];
+        double val = momentumFactor*deltaHidden[j][i];
+        deltaHidden[j][i] = 0;
         for(int k=0;k<nOutputs;k++)
         {
           deltaHidden[j][i] += weightOutput[i][k]*(desiredValues[k]-outputNeurons[k])*outputNeurons[i]*(1- outputNeurons[i]);
         }
         deltaHidden[j][i] *= learningFactor*inputNeurons[j]*hiddenNeurons[i]*(1 - hiddenNeurons[i]);
+        deltaHidden[j][i] += val;
       }
     }
 
