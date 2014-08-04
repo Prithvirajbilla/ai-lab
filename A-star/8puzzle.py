@@ -1,6 +1,7 @@
 from astar import AstarState, AstarNodeState
 
 class eightPuzzle(AstarState):
+	#MANHATTAN HEURISTIC
 	def heuristic(self, node, start, end):
 		ans = 0
 		for i in xrange(9):
@@ -14,6 +15,40 @@ class eightPuzzle(AstarState):
 			ans += abs(expi - row) + abs(expj - col)
 		return ans
 
+	#MISPLACED TILES HEURISTIC
+	# def heuristic(self, node, start, end):
+	# 	ans = 0
+	# 	for i in xrange(9):
+	# 		if node.array[i]==0:
+	# 			continue
+	# 		num = node.array[i]
+	# 		row = i/3
+	# 		col = i%3
+	# 		expi = (num-1)/3
+	# 		expj = (num-1)%3
+	# 		if ((row != expi) or (col != expj)):
+	# 			ans+=1
+	# 	return ans
+
+	#MISPLACED TILES HEURISTIC WITH ZERO TILE
+	# def heuristic(self, node, start, end):
+	# 	ans = 0
+	# 	for i in xrange(9):
+	# 		if node.array[i]==0:
+	#			num = node.array[i]
+	#			row = i/3
+	#			col = i%3
+	#			if((row!=2) or (col!=2)):
+	#				ans+=1
+	#			continue
+	# 		num = node.array[i]
+	#		row = i/3
+	#		col = i%3
+	#		expi = (num-1)/3
+	#		expj = (num-1)%3
+	#		if ((row != expi) or (col != expj)):
+	#			ans+=1
+	#	return ans
 
 
 class puzzleState(AstarNodeState):
@@ -77,16 +112,21 @@ class puzzleState(AstarNodeState):
 		return True
 
 def main():
-	# start = (2,4,0,1,8,5,3,6,7)
-	start = (0,3,2,1,6,8,5,7,4)
-	# start = (1,2,3,4,5,6,0,7,8)
+	#start = (2,4,0,1,8,5,3,6,7)
+	# start = (2,3,0,1,6,8,5,7,4)
+	#start = (3,8,5,1,6,7,4,0,2)
+	# start = (6,4,2,8,3,7,1,0,5)
+	# start = (1,5,2,7,4,3,0,8,6)
+	start = (4,2,3,1,5,7,6,0,8)
 	end = (1,2,3,4,5,6,7,8,0)
 	startState = puzzleState(start)
 	endState = puzzleState(end)
 	puzzle = eightPuzzle(startState)
 	path = puzzle.search(startState, endState)
+	# path = puzzle.bidirectional_search(startState, endState)
 	for i in path:
 		i.printState()
 		print
+	print "THe number of steps needed : ", len(path)-1
 
 main()

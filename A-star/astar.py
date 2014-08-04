@@ -19,7 +19,6 @@ class AstarGraph(object):
 				if((i.g + i.h) < f_value):
 					f_value = i.g + i.h
 					current = i
-			# current.printState()
 			if current == end:
 				path = []
 				while current.parent:
@@ -53,34 +52,23 @@ class AstarState(object):
 		raise NotImplementedError
 
 	def search(self, start, end):
-		# openset = set()
-		openset = []
+		openset = set()
 		closedset = set()
 		current = start
-		# openset.add(current)
-		heapq.heappush(openset, current)
+		openset.add(start)
 		count = 1
 		while len(openset)!=0:
-			# current = None
-			# f_value = 10000000
-			# for i in openset:
-			# 	if((i.g + i.h) < f_value):
-			# 		f_value = i.g + i.h
-			# 		current = i
-			current = heapq.heappop(openset)
-			# print count
-			# count+=1
-			# current = min(openset, key=lambda o:o.g + o.h)
-			# current.printState()
-			# print
-			# openset.remove(current)
+			count+=1
+			current = min(openset, key=lambda o: o.g+o.h)
 			closedset.add(current)
+			openset.remove(current)
 			if current.equal(end):
 				path = []
 				while current.parent:
 					path.append(current)
 					current = current.parent
 				path.append(current)
+				print count
 				return path[::-1]
 			for node in current.getAllNextStates():
 				if node in closedset:
@@ -94,10 +82,71 @@ class AstarState(object):
 					node.g = current.g + current.move_cost(node)
 					node.h = self.heuristic(node, start, end)
 					node.parent = current
-					heapq.heappush(openset, node)
-					# openset.add(node)
+					openset.add(node)
 		return None
 
+	def bidirectional_search(self, start, end):
+		openset1 = set()
+		openset2 = set()
+		closedset1 = set()
+		closedset2 = set()
+		openset1.add(start)
+		openset2.add(end)
+		count = 1
+		current1 = start
+		current2 = end
+		while (not current1.equal(current2)):
+			count+=1
+			current1 = min(openset1, key=lambda o: o.g+o.h)
+			current2 = min(openset2, key=lambda o: o.g+o.h)
+			closedset1.add(current1)
+			closedset2.add(current2)
+			openset1.remove(current1)
+			openset2.remove(current2)
+			if current1.equal(current2):
+				path2 = []
+				while current2.parent:
+					path2.append(current2)
+					current2 = current2.parent
+				path2.append(current2)
+				# path2 = path2[::-1]
+				path1 = []
+				while current1.parent:
+					path1.append(current1)
+					current1 = current1.parent
+				path1.append(current1)
+				path1 = path1[::-1]
+				path = []
+				path = path1 + path2
+				print count
+				return path
+			for node1 in current1.getAllNextStates():
+				if node1 in closedset1:
+					continue
+				if node1 in openset1:
+					new_g = current1.g + current1.move_cost(node1)
+					if node1.g > new_g:
+						node1.g = new_g
+						node1.parent = current1
+				else:
+					node1.g = current1.g + current1.move_cost(node1)
+					node1.h = self.heuristic(node1, start, end)
+					node1.parent = current1
+					openset1.add(node1)
+			for node2 in current2.getAllNextStates():
+				if node2 in closedset2:
+					continue
+				if node2 in openset2:
+					new_g = current2.g + current2.move_cost(node2)
+					if node2.g > new_g:
+						node2.g = new_g
+						node2.parent = current2
+				else:
+					node2.g = current2.g + current2.move_cost(node2)
+					node2.h = self.heuristic(node2, start, end)
+					node2.parent = current2
+					openset2.add(node2)
+		return None
 
 class AstarNodeState(object):
 	def __init__(self):
@@ -115,7 +164,7 @@ class AstarNodeState(object):
 		raise NotImplementedError
 
 	def equal(self, state):
-		raise NotImplementedError
+ 		raise NotImplementedError
 
 
 class AstarNodeGraph(object):
